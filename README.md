@@ -23,7 +23,7 @@ Add the variables to those json files
 
 // nl.json
 {
-    "hallo": "Hallo, Wereld!"
+    "hello": "Hallo, Wereld!"
 }
 ```
 ```js

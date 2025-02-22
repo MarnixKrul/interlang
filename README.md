@@ -55,3 +55,4 @@ console.log(il.t("hello")); // hello
 
 # Todo:
 * Add typing to `t()` after loading languages
+

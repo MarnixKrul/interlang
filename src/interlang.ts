@@ -6,25 +6,40 @@ type Languages = { [langCode: string]: LanguageData }
 class Interlang {
 	private languages: Languages = {};
 	private currentLang: string | null = null;
-	constructor() {
-		this.languages = {};
-		this.currentLang = null;
+	constructor(currentLang: string | null = null) {
+		this.currentLang = currentLang;
+		this.loadLanguageFiles()
 	}
 
-	async loadLanguageFiles(langDirs: string[]) {
-		for (const dir of langDirs) {
-			const files = fs.readdirSync(dir);
-			for (const file of files) {
-				if (file.endsWith('.json')) {
-					const langCode = path.basename(file, '.json');
-					const filePath = path.join(dir, file);
-					const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-					if (!this.languages[langCode]) {
-						this.languages[langCode] = {};
-					}
-					Object.assign(this.languages[langCode], content);
+	loadLanguageFiles() {
+		const findLangFiles = (dir: string) => {
+			let langFiles: any = [];
+			const items = fs.readdirSync(dir, { withFileTypes: true });
+
+			for (const item of items) {
+				const fullPath = path.join(dir, item.name);
+				const isJsonLangFile = item.isFile() &&
+					fullPath.includes(path.sep + 'lang' + path.sep) &&
+					fullPath.endsWith('.json');
+
+				if (isJsonLangFile) {
+					langFiles.push(fullPath)
+				} else if (item.isDirectory()) {
+					langFiles = langFiles.concat(findLangFiles(fullPath));
 				}
 			}
+			return langFiles;
+		};
+
+		const langFiles = findLangFiles(path.resolve(__dirname));
+
+		for (const filePath of langFiles) {
+			const langCode = path.basename(filePath, '.json');
+			const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+			if (!this.languages[langCode]) {
+				this.languages[langCode] = {};
+			}
+			Object.assign(this.languages[langCode], content);
 		}
 	}
 
@@ -39,6 +54,9 @@ class Interlang {
 	t(key: string) {
 		if (!this.currentLang || !this.languages[this.currentLang]) {
 			throw new Error('No language selected or language not loaded');
+		}
+		if (!this.languages[this.currentLang][key]) {
+			throw new Error(`Key ${key} missing in language ${this.currentLang}`)
 		}
 		return this.languages[this.currentLang][key] || key;
 	}

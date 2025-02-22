@@ -4,9 +4,12 @@ It's definitely not production ready.
 
 ## How to use.
 create any json file with a locale abbreviation: `en.json`
+
 create any `lang` folder.
 
 ```
+/module/lang/
+  en.json
 /lang/
   en.json
   de.json
@@ -27,16 +30,14 @@ Add the variables to those json files
 }
 ```
 ```js
-import loadLangText from 'interlang'
+import Interlang from "interlang";
 
-loadLangText('nl')
-t('hello') // Hallo, Wereld!
+const il = new Interlang();
+await il.loadLanguages(["./lang, ./module/lang/"]);
+il.setLanguage("en");
+
+console.log(il.t("hello")); // Hello, World
 ```
 
-## Todo:
-1. Load all lang folders language files
-    The project should check all language folders and load the texts once
-
-1. Export loadLangText
-1. Support all languages
-
+# Todo:
+[] Add typing to t after loading languages

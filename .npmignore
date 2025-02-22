@@ -1,0 +1,6 @@
+src/
+node_modules/
+.gitignore
+tsconfig.json
+.prettierrc
+jest.config.js

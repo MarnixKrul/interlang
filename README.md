@@ -28,16 +28,30 @@ Add the variables to those json files
 {
     "hello": "Hallo, Wereld!"
 }
+
+// de.json
+{
+    "bye":"tschüss"
+}
 ```
 ```js
 import Interlang from "interlang";
 
 const il = new Interlang();
-await il.loadLanguages(["./lang, ./module/lang/"]);
+await il.loadLanguageFiles(["./lang, ./module/lang/"]);
 il.setLanguage("en");
 
 console.log(il.t("hello")); // Hello, World
+il.setLanguage("nl");
+console.log(il.t("hello")); // Hallo, Wereld!
+```
+
+if a **key** is missing, the value of the key is printed:
+
+```js
+il.setLanguage('de')
+console.log(il.t("hello")); // hello
 ```
 
 # Todo:
-[] Add typing to t after loading languages
+* Add typing to `t()` after loading languages

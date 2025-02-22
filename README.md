@@ -38,7 +38,6 @@ Add the variables to those json files
 import Interlang from "interlang";
 
 const il = new Interlang();
-await il.loadLanguageFiles(["./lang, ./module/lang/"]);
 il.setLanguage("en");
 
 console.log(il.t("hello")); // Hello, World

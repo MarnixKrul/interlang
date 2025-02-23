@@ -8,6 +8,7 @@
 		"**/*.test.ts",
 		"**/*.spec.ts"
 	],
+	"files":["index.ts"],
 	"include": [
 		"src",
 		"test"

@@ -1,9 +1,9 @@
 {
 	"name": "@mix-tools/interlang",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"type": "module",
 	"description": "A small opiniated i18n package",
-	"main": "dist/interlang.js",
+	"main": "dist/main.js",
 	"scripts": {
 		"test": "jest",
 		"prepare": "yarn build",
